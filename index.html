@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Pop Leaderboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .leaderboard-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+        }
+        
+        .leaderboard-title {
+            text-align: center;
+            color: #4682b4;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .leaderboard-table th {
+            background-color: #4682b4;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .leaderboard-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .rank {
+            font-weight: bold;
+            color: #4682b4;
+            text-align: center;
+        }
+        
+        .score {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .bubble-animation {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .bubble {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 15px 15px, #7db9e8, #4682b4);
+            margin: 0 5px;
+            animation: float 3s infinite ease-in-out alternate;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .bubble:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .bubble:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            from {
+                transform: translateY(0px);
+            }
+            to {
+                transform: translateY(-20px);
+            }
+        }
+        .celebration {
+            text-align: center;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        .celebration h2 {
+            color: #ff4500;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 24px;
+            margin: 0;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            border-radius: 0;
+            animation: fall linear forwards;
+            transform: rotate(45deg);
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(765deg);
+                opacity: 0;
+            }
+        }
+        tr:first-child {
+            animation: spotlight 2s infinite alternate;
+            position: relative;
+            z-index: 5;
+        }
+        
+        @keyframes spotlight {
+            0% { box-shadow: 0 0 10px 3px gold; }
+            100% { box-shadow: 0 0 25px 8px gold; }
+        }
+        
+        /* Loser effect */
+        tr:nth-child(2) {
+            opacity: 0.7;
+            filter: grayscale(70%);
+        }
+        
+        /* Enhanced celebration */
+        .celebration {
+            text-align: center;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+            background: linear-gradient(to right, #ff8a00, #e52e71, #ff8a00);
+            background-size: 200% auto;
+            animation: gradientShift 3s ease infinite, pulse 2s infinite;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.7);
+        }
+        
+        .celebration h2 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 26px;
+            margin: 0;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+        
+        /* Trophy icon */
+        .rank.winner::after {
+            content: "👑";
+            display: block;
+            font-size: 24px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Enhanced confetti */
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            top: -15px;
+            border-radius: 0;
+            animation: fall linear forwards;
+            transform: rotate(45deg);
+            box-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        
+        /* Special confetti text */
+        .text-confetti {
+            position: absolute;
+            color: gold;
+            font-weight: bold;
+            font-size: 18px;
+            animation: textFall linear forwards;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        @keyframes textFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(20deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Score differential highlight */
+        .score-diff {
+            font-size: 12px;
+            color: #ff4500;
+            display: block;
+            animation: flash 1.5s infinite;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="leaderboard-container">
+        <h1 class="leaderboard-title">Bubble Pop Leaderboard</h1>
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Bubble Pops</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="rank">1</td>
+                    <td>Owen</td>
+                    <td class="score">73</td>
+                </tr>
+                <tr>
+                    <td class="rank">2</td>
+                    <td>Jack</td>
+                    <td class="score">57</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bubble-animation">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+        <p>Benching 700 once is better than benching 500 once 10 times 💯</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Leaderboard loaded successfully!');
+            
+            // Mark Owen as the winner
+            const owenRank = document.querySelector('.leaderboard-table tr:first-child .rank');
+            owenRank.classList.add('winner');
+            
+            // Add score differential
+            const owenScore = parseInt(document.querySelector('.leaderboard-table tr:first-child .score').textContent);
+            const jackScore = parseInt(document.querySelector('.leaderboard-table tr:nth-child(2) .score').textContent);
+            const scoreDiff = owenScore - jackScore;
+            
+            const owenScoreCell = document.querySelector('.leaderboard-table tr:first-child .score');
+            const diffSpan = document.createElement('span');
+            diffSpan.classList.add('score-diff');
+            diffSpan.textContent = `+${scoreDiff} over Jack!`;
+            owenScoreCell.appendChild(diffSpan);
+            
+            // Create enhanced celebration banner
+            const celebrationDiv = document.createElement('div');
+            celebrationDiv.classList.add('celebration');
+            celebrationDiv.innerHTML = '<h2>⭐ OWEN IS SUPERIOR ⭐</h2>';
+            document.querySelector('.leaderboard-container').appendChild(celebrationDiv);
+            
+            // Create confetti container
+            const confettiContainer = document.createElement('div');
+            confettiContainer.classList.add('confetti-container');
+            document.body.appendChild(confettiContainer);
+            
+            // Create confetti pieces
+            const colors = ['#ff0000', '#ffd700', '#0000ff', '#ff00ff', '#00ffff', '#ff7f00'];
+            const messages = ['OWEN RULES!', 'CHAMPION!', '👑', 'THE BEST!', '#1', 'JACK WHO?'];
+            
+            // Generate confetti continuously
+            setInterval(function() {
+                // Regular confetti
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                
+                confettiContainer.appendChild(confetti);
+                
+                // Randomly add text confetti
+                if (Math.random() < 0.2) {
+                    const textConfetti = document.createElement('div');
+                    textConfetti.classList.add('text-confetti');
+                    textConfetti.style.left = Math.random() * 100 + 'vw';
+                    textConfetti.textContent = messages[Math.floor(Math.random() * messages.length)];
+                    textConfetti.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                    
+                    confettiContainer.appendChild(textConfetti);
+                    
+                    // Remove text confetti after animation
+                    setTimeout(() => {
+                        textConfetti.remove();
+                    }, 7000);
+                }
+                
+                // Remove regular confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }, 100);
+            
+            // Add victory sound
+            const victorySound = new Audio('https://www.soundjay.com/buttons/sounds/button-09.mp3');
+            victorySound.volume = 0.3;
+            victorySound.play();
+            
+            // Create spotlight effect on page load
+            const spotlight = () => {
+                document.body.style.backgroundColor = '#f0f8ff';
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '#fffae0';
+                }, 200);
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '#f0f8ff';
+                }, 400);
+            };
+            
+            // Flash spotlight effect every few seconds
+            setInterval(spotlight, 5000);
+            spotlight(); // Run once immediately
+        });
+    </script>
+</body>
+</html>
