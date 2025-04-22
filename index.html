@@ -22,6 +22,7 @@
             padding: 20px;
             width: 80%;
             max-width: 500px;
+            position: relative;
         }
         
         .leaderboard-title {
@@ -95,74 +96,7 @@
                 transform: translateY(-20px);
             }
         }
-        .celebration {
-            text-align: center;
-            margin: 20px 0;
-            animation: pulse 2s infinite;
-        }
         
-        .celebration h2 {
-            color: #ff4500;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            font-size: 24px;
-            margin: 0;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            overflow: hidden;
-        }
-        
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            top: -10px;
-            border-radius: 0;
-            animation: fall linear forwards;
-            transform: rotate(45deg);
-        }
-        
-        @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(765deg);
-                opacity: 0;
-            }
-        }
-        tr:first-child {
-            animation: spotlight 2s infinite alternate;
-            position: relative;
-            z-index: 5;
-        }
-        
-        @keyframes spotlight {
-            0% { box-shadow: 0 0 10px 3px gold; }
-            100% { box-shadow: 0 0 25px 8px gold; }
-        }
-        
-        /* Loser effect */
-        tr:nth-child(2) {
-            opacity: 0.7;
-            filter: grayscale(70%);
-        }
-        
-        /* Enhanced celebration */
         .celebration {
             text-align: center;
             margin: 20px 0;
@@ -184,6 +118,62 @@
             text-transform: uppercase;
         }
         
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            top: -15px;
+            border-radius: 0;
+            animation: fall linear forwards;
+            transform: rotate(45deg);
+            box-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(765deg);
+                opacity: 0;
+            }
+        }
+        
+        tr:first-child {
+            animation: spotlight 2s infinite alternate;
+            position: relative;
+            z-index: 5;
+        }
+        
+        @keyframes spotlight {
+            0% { box-shadow: 0 0 10px 3px gold; }
+            100% { box-shadow: 0 0 25px 8px gold; }
+        }
+        
+        /* Loser effect */
+        tr:nth-child(2) {
+            opacity: 0.7;
+            filter: grayscale(70%);
+        }
+        
         @keyframes gradientShift {
             0% { background-position: 0% center; }
             50% { background-position: 100% center; }
@@ -201,18 +191,6 @@
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
-        }
-        
-        /* Enhanced confetti */
-        .confetti {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            top: -15px;
-            border-radius: 0;
-            animation: fall linear forwards;
-            transform: rotate(45deg);
-            box-shadow: 0 0 5px rgba(255,255,255,0.5);
         }
         
         /* Special confetti text */
@@ -248,6 +226,197 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+
+        .loser-stamp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            color: rgba(255, 0, 0, 0.7);
+            border: 3px solid red;
+            padding: 5px 10px;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 10;
+            animation: stamp 2s infinite;
+        }
+        
+        @keyframes stamp {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-15deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(-15deg) scale(1.1); }
+        }
+        
+        /* Strike through name */
+        .strike {
+            text-decoration: line-through;
+            color: red;
+        }
+        
+        /* Floating bubbles */
+        .owen-bubble {
+            position: fixed;
+            background: radial-gradient(circle at 30% 30%, #ffda9e, #ffa200);
+            color: #333;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 50%;
+            animation: float-up 4s ease-in forwards;
+            z-index: 999;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes float-up {
+            0% { bottom: -50px; transform: scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { bottom: 100vh; transform: scale(1.5); opacity: 0; }
+        }
+        
+        /* Dramatic entry */
+        .dramatic-entry {
+            animation: dramatic-entry 1s ease-out forwards, spotlight 2s infinite alternate;
+        }
+        
+        @keyframes dramatic-entry {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Pathetic score styling */
+        .pathetic-score {
+            position: relative;
+            cursor: help;
+        }
+        
+        .pathetic-score:after {
+            content: "😂";
+            position: absolute;
+            right: -20px;
+            top: 0;
+        }
+        
+        /* Celebration counter */
+        .celebration-counter {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #e52e71;
+            font-size: 14px;
+            animation: glow 1.5s infinite alternate;
+        }
+        
+        #counter {
+            font-size: 18px;
+            font-weight: bolder;
+        }
+        
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px rgba(229, 46, 113, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(229, 46, 113, 0.8); }
+        }
+
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            z-index: 998;
+            pointer-events: none;
+        }
+        
+        .firework.explode {
+            width: 0;
+            height: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            border-radius: 2px;
+            animation: particle 1s forwards;
+        }
+        
+        @keyframes particle {
+            from {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translate(calc(cos(var(--angle, 0deg)) * 100px), calc(sin(var(--angle, 90deg)) * 100px));
+                opacity: 0;
+            }
+        }
+        
+        /* Victory dancers */
+        .victory-dancer {
+            position: fixed;
+            bottom: 10px;
+            font-size: 50px;
+            animation: dance 5s linear forwards;
+            z-index: 997;
+            pointer-events: none;
+        }
+        
+        @keyframes dance {
+            0% {
+                transform: translateY(0) rotate(0);
+                bottom: -50px;
+                opacity: 0;
+            }
+            10% {
+                bottom: 10px;
+                opacity: 1;
+            }
+            25% {
+                transform: translateY(-30px) rotate(20deg);
+            }
+            50% {
+                transform: translateY(0) rotate(-20deg);
+            }
+            75% {
+                transform: translateY(-30px) rotate(20deg);
+            }
+            90% {
+                opacity: 1;
+                bottom: 10px;
+            }
+            100% {
+                transform: translateY(0) rotate(0);
+                bottom: -50px;
+                opacity: 0;
+            }
+        }
+        
+        /* Trophy case for Jack */
+        .leaderboard-container::after {
+            content: "🏆";
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-size: 60px;
+            animation: trophy-shine 3s infinite;
+            filter: drop-shadow(0 0 10px gold);
+        }
+        
+        @keyframes trophy-shine {
+            0%, 100% { transform: rotate(-10deg) scale(1); filter: drop-shadow(0 0 10px gold); }
+            50% { transform: rotate(10deg) scale(1.1); filter: drop-shadow(0 0 30px gold); }
+        }
+        
+        /* Enhanced victory title */
+        .leaderboard-title::after {
+            content: " - JACK'S DOMAIN";
+            font-size: 16px;
+            color: gold;
+            text-shadow: 0 0 5px red;
+            animation: pulse 1.5s infinite;
+        }
     </style>
 </head>
 <body>
@@ -264,14 +433,15 @@
             <tbody>
                 <tr>
                     <td class="rank">1</td>
-                    <td>Owen</td>
-                    <td class="score">73</td>
+                    <td>Jack</td>
+                    <td class="score">200</td>
                 </tr>
                 <tr>
                     <td class="rank">2</td>
-                    <td>Jack</td>
-                    <td class="score">57</td>
+                    <td>Owen</td>
+                    <td class="score">73</td>
                 </tr>
+               
             </tbody>
         </table>
         <div class="bubble-animation">
@@ -286,38 +456,107 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Leaderboard loaded successfully!');
             
-            // Mark Owen as the winner
-            const owenRank = document.querySelector('.leaderboard-table tr:first-child .rank');
-            owenRank.classList.add('winner');
+            // ----- UPDATE THE SCORES FIRST -----
+            const jackScoreElement = document.querySelector('.leaderboard-table tr:nth-child(1) .score');
+            jackScoreElement.textContent = '200'; // Ensure Jack's score is 200
+            
+            // ----- SETUP DATA -----
+            // Get the rows in their current order
+            const tbody = document.querySelector('.leaderboard-table tbody');
+            const jackRow = document.querySelector('.leaderboard-table tr:nth-child(1)');
+            const owenRow = document.querySelector('.leaderboard-table tr:nth-child(2)');
+            
+            // Ensure ranks are correct
+            jackRow.querySelector('.rank').textContent = '1';
+            owenRow.querySelector('.rank').textContent = '2';
+            
+            // Get scores
+            const jackScore = parseInt(jackRow.querySelector('.score').textContent);
+            const owenScore = parseInt(owenRow.querySelector('.score').textContent);
+            const scoreDiff = jackScore - owenScore;
+            
+            const colors = ['#ff0000', '#ffd700', '#0000ff', '#ff00ff', '#00ffff', '#ff7f00'];
+            const messages = [
+                'JACK RULES!', 
+                'CHAMPION!', 
+                '👑', 
+                'THE BEST!', 
+                '#1', 
+                'OWEN WHO?',
+                'JACK > OWEN',
+                '+' + scoreDiff + ' POINTS!'
+            ];
+            
+            // ----- JACK ENHANCEMENTS -----
+            // Mark Jack as the winner
+            const jackRank = jackRow.querySelector('.rank');
+            jackRank.classList.add('winner');
+            jackRow.classList.add('dramatic-entry');
             
             // Add score differential
-            const owenScore = parseInt(document.querySelector('.leaderboard-table tr:first-child .score').textContent);
-            const jackScore = parseInt(document.querySelector('.leaderboard-table tr:nth-child(2) .score').textContent);
-            const scoreDiff = owenScore - jackScore;
-            
-            const owenScoreCell = document.querySelector('.leaderboard-table tr:first-child .score');
+            const jackScoreCell = jackRow.querySelector('.score');
             const diffSpan = document.createElement('span');
             diffSpan.classList.add('score-diff');
-            diffSpan.textContent = `+${scoreDiff} over Jack!`;
-            owenScoreCell.appendChild(diffSpan);
+            diffSpan.textContent = `+${scoreDiff} over Owen!`;
+            jackScoreCell.appendChild(diffSpan);
             
-            // Create enhanced celebration banner
+            // ----- OWEN HUMILIATION -----
+            // Modify Owen's row
+            const owenName = owenRow.querySelector('td:nth-child(2)');
+            owenName.innerHTML = 'O<span class="strike">w</span>en';
+            
+            // Add LOSER stamp
+            const owenCell = owenRow.querySelector('td:nth-child(2)');
+            owenCell.style.position = 'relative';
+            
+            const loserStamp = document.createElement('div');
+            loserStamp.classList.add('loser-stamp');
+            loserStamp.textContent = 'LOSER';
+            owenCell.appendChild(loserStamp);
+            
+            // Add pathetic score indicator
+            const owenScoreCell = owenRow.querySelector('.score');
+            owenScoreCell.setAttribute('title', 'Pathetic attempt');
+            owenScoreCell.classList.add('pathetic-score');
+            
+            // ----- CELEBRATION ELEMENTS -----
+            // Create celebration banner
             const celebrationDiv = document.createElement('div');
             celebrationDiv.classList.add('celebration');
-            celebrationDiv.innerHTML = '<h2>⭐ OWEN IS SUPERIOR ⭐</h2>';
+            celebrationDiv.innerHTML = '<h2>⭐ JACK IS SUPERIOR ⭐</h2>';
             document.querySelector('.leaderboard-container').appendChild(celebrationDiv);
             
-            // Create confetti container
+            // Create countdown timer
+            const celebrationCounter = document.createElement('div');
+            celebrationCounter.classList.add('celebration-counter');
+            celebrationCounter.innerHTML = 'Jack has been better than Owen for <span id="counter">0</span> seconds';
+            document.querySelector('.leaderboard-container').appendChild(celebrationCounter);
+            
+            // Update bench quote
+            const benchQuote = document.querySelector('.leaderboard-container p');
+            if (benchQuote) {
+                benchQuote.textContent = 'Benching 200 regularly is better than benching 73 once 💯';
+            }
+            
+            // Setup confetti container
             const confettiContainer = document.createElement('div');
             confettiContainer.classList.add('confetti-container');
             document.body.appendChild(confettiContainer);
             
-            // Create confetti pieces
-            const colors = ['#ff0000', '#ffd700', '#0000ff', '#ff00ff', '#00ffff', '#ff7f00'];
-            const messages = ['OWEN RULES!', 'CHAMPION!', '👑', 'THE BEST!', '#1', 'JACK WHO?'];
+            // ----- ANIMATIONS & EFFECTS -----
+            // Spotlight effect function
+            const spotlight = () => {
+                document.body.style.backgroundColor = '#f0f8ff';
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '#fffae0';
+                }, 200);
+                setTimeout(() => {
+                    document.body.style.backgroundColor = '#f0f8ff';
+                }, 400);
+            };
             
-            // Generate confetti continuously
-            setInterval(function() {
+            // Create random confetti
+            const createConfetti = () => {
                 // Regular confetti
                 const confetti = document.createElement('div');
                 confetti.classList.add('confetti');
@@ -327,7 +566,7 @@
                 
                 confettiContainer.appendChild(confetti);
                 
-                // Randomly add text confetti
+                // Random text confetti
                 if (Math.random() < 0.2) {
                     const textConfetti = document.createElement('div');
                     textConfetti.classList.add('text-confetti');
@@ -347,27 +586,90 @@
                 setTimeout(() => {
                     confetti.remove();
                 }, 5000);
-            }, 100);
-            
-            // Add victory sound
-            const victorySound = new Audio('https://www.soundjay.com/buttons/sounds/button-09.mp3');
-            victorySound.volume = 0.3;
-            victorySound.play();
-            
-            // Create spotlight effect on page load
-            const spotlight = () => {
-                document.body.style.backgroundColor = '#f0f8ff';
-                setTimeout(() => {
-                    document.body.style.backgroundColor = '#fffae0';
-                }, 200);
-                setTimeout(() => {
-                    document.body.style.backgroundColor = '#f0f8ff';
-                }, 400);
             };
             
-            // Flash spotlight effect every few seconds
-            setInterval(spotlight, 5000);
-            spotlight(); // Run once immediately
+            // Create Jack bubble
+            const createJackBubble = () => {
+                const jackBubble = document.createElement('div');
+                jackBubble.classList.add('owen-bubble'); // Reusing the same class
+                jackBubble.textContent = 'Jack > Owen';
+                jackBubble.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(jackBubble);
+                
+                setTimeout(() => {
+                    jackBubble.remove();
+                }, 4000);
+            };
+            
+            // New feature: Fireworks effect
+            const createFirework = () => {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                firework.style.left = Math.random() * 100 + 'vw';
+                firework.style.top = Math.random() * 50 + 'vh';
+                document.body.appendChild(firework);
+                
+                setTimeout(() => {
+                    firework.classList.add('explode');
+                    
+                    // Create particles
+                    for (let i = 0; i < 20; i++) {
+                        const particle = document.createElement('div');
+                        particle.classList.add('particle');
+                        const hue = Math.floor(Math.random() * 360);
+                        particle.style.backgroundColor = `hsl(${hue}, 100%, 60%)`;
+                        const angle = (i / 20) * 360;
+                        particle.style.setProperty('--angle', angle + 'deg');
+                        
+                        firework.appendChild(particle);
+                    }
+                    
+                    setTimeout(() => {
+                        firework.remove();
+                    }, 1000);
+                }, 500);
+            };
+            
+            // New feature: Victory dance animation
+            const createVictoryDance = () => {
+                const dancer = document.createElement('div');
+                dancer.classList.add('victory-dancer');
+                const dancers = ['🕺', '💃', '🏆', '🥇', '👑'];
+                dancer.innerHTML = dancers[Math.floor(Math.random() * dancers.length)];
+                dancer.style.left = Math.random() * 80 + 10 + 'vw';
+                document.body.appendChild(dancer);
+                
+                setTimeout(() => {
+                    dancer.remove();
+                }, 5000);
+            };
+            
+            // ----- INITIALIZE TIMERS & EFFECTS -----
+            // Update counter
+            let seconds = 0;
+            setInterval(() => {
+                seconds++;
+                document.getElementById('counter').textContent = seconds;
+            }, 1000);
+            
+            // Regular effects
+            setInterval(createConfetti, 100);  // Confetti every 100ms
+            setInterval(createJackBubble, 2000);  // Bubbles every 2s
+            setInterval(spotlight, 5000);  // Spotlight every 5s
+            setInterval(createFirework, 3000);  // New fireworks every 3s
+            setInterval(createVictoryDance, 7000);  // Victory dancers every 7s
+            
+            // Play victory sound once on page load
+            try {
+                const victorySound = new Audio('https://www.soundjay.com/buttons/sounds/button-09.mp3');
+                victorySound.volume = 0.3;
+                victorySound.play().catch(e => console.log('Audio autoplay blocked by browser'));
+            } catch(e) {
+                console.log('Audio playback error:', e);
+            }
+            
+            // Run spotlight immediately
+            spotlight();
         });
     </script>
 </body>
