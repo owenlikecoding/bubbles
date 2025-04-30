@@ -417,6 +417,17 @@
             text-shadow: 0 0 5px red;
             animation: pulse 1.5s infinite;
         }
+
+        /* Auto clicker reveal */
+        .auto-clicker-reveal {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -450,6 +461,7 @@
             <div class="bubble"></div>
         </div>
         <p>Benching 700 once is better than benching 500 once 10 times 💯</p>
+        <div class="auto-clicker-reveal" style="display: none;">Owen used an auto clicker!</div>
     </div>
 
     <script>
@@ -619,6 +631,15 @@
             setInterval(createOwenImage, 500); // Show ow enbetter.png abundantly
             
             spotlight();
+
+            // Reveal auto clicker usage
+            function revealAutoClicker() {
+                const autoClickerDiv = document.querySelector('.auto-clicker-reveal');
+                autoClickerDiv.style.display = 'block';
+            }
+
+            // Call revealAutoClicker after Owen's victory celebration
+            setTimeout(revealAutoClicker, 10000);
         });
     </script>
 </body>
