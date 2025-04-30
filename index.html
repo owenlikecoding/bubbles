@@ -454,59 +454,70 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ----- SETUP DATA -----
             const tbody = document.querySelector('.leaderboard-table tbody');
             const jackRow = tbody.querySelector('tr:nth-child(1)');
             const owenRow = tbody.querySelector('tr:nth-child(2)');
             
-            // Ensure ranks
-            jackRow.querySelector('.rank').textContent = '1';
-            owenRow.querySelector('.rank').textContent = '2';
+            // SET NEW SCORES
+            jackRow.querySelector('.score').textContent = '200';
+            owenRow.querySelector('.score').textContent = '594';
             
             const jackScore = parseInt(jackRow.querySelector('.score').textContent, 10);
             const owenScore = parseInt(owenRow.querySelector('.score').textContent, 10);
-            const scoreDiff = jackScore - owenScore;
+            const scoreDiff = owenScore - jackScore;
             
-            const colors = ['#ff0000','#ffd700','#0000ff','#ff00ff','#00ffff','#ff7f00'];
-            const messages = [
-                'JACK RULES!','CHAMPION!','👑','THE BEST!','#1',
-                'OWEN WHO?','JACK > OWEN','+'+ scoreDiff +' POINTS!'
-            ];
+            // ENSURE RANKS: Owen becomes #1
+            owenRow.querySelector('.rank').textContent = '1';
+            jackRow.querySelector('.rank').textContent = '2';
             
-            // JACK ENHANCEMENTS
-            jackRow.classList.add('dramatic-entry');
-            jackRow.querySelector('.rank').classList.add('winner');
+            // OWEN ENHANCEMENTS
+            owenRow.classList.add('dramatic-entry');
+            owenRow.querySelector('.rank').classList.add('winner');
             const diffSpan = document.createElement('span');
             diffSpan.classList.add('score-diff');
-            diffSpan.textContent = `+${scoreDiff} over Owen!`;
-            jackRow.querySelector('.score').appendChild(diffSpan);
+            diffSpan.textContent = `+${scoreDiff} over Jack!`;
+            owenRow.querySelector('.score').appendChild(diffSpan);
             
-            // OWEN HUMILIATION
-            const owenName = owenRow.querySelector('td:nth-child(2)');
-            owenName.innerHTML = 'O<span class="strike">w</span>en';
+            // JACK HUMILIATION
+            const jackName = jackRow.querySelector('td:nth-child(2)');
+            jackName.innerHTML = 'J<span class="strike">A</span>ck';
             const loserStamp = document.createElement('div');
             loserStamp.classList.add('loser-stamp');
             loserStamp.textContent = 'LOSER';
-            owenName.style.position = 'relative';
-            owenName.appendChild(loserStamp);
-            owenRow.querySelector('.score').classList.add('pathetic-score');
+            jackName.style.position = 'relative';
+            jackName.appendChild(loserStamp);
+            jackRow.querySelector('.score').classList.add('pathetic-score');
             
-            // CELEBRATION ELEMENTS
+            // CELEBRATION ELEMENTS for OWEN
             const celebrationDiv = document.createElement('div');
             celebrationDiv.classList.add('celebration');
-            celebrationDiv.innerHTML = '<h2>⭐ JACK IS SUPERIOR ⭐</h2>';
+            celebrationDiv.innerHTML = '<h2>⭐ OWEN IS THE CHAMP! ⭐</h2>';
             document.querySelector('.leaderboard-container').appendChild(celebrationDiv);
             
             const celebrationCounter = document.createElement('div');
             celebrationCounter.classList.add('celebration-counter');
-            celebrationCounter.innerHTML = 'Jack has been better than Owen for <span id="counter">0</span> seconds';
+            celebrationCounter.innerHTML = 'Owen has dominated for <span id="counter">0</span> seconds';
             document.querySelector('.leaderboard-container').appendChild(celebrationCounter);
             
-            const confettiContainer = document.createElement('div');
-            confettiContainer.classList.add('confetti-container');
-            document.body.appendChild(confettiContainer);
+            // Create a container to repeatedly show owenbetter.png all over the screen
+            const owenImageContainer = document.createElement('div');
+            owenImageContainer.id = 'owen-images';
+            owenImageContainer.style.position = 'fixed';
+            owenImageContainer.style.top = '0';
+            owenImageContainer.style.left = '0';
+            owenImageContainer.style.width = '100%';
+            owenImageContainer.style.height = '100%';
+            owenImageContainer.style.pointerEvents = 'none';
+            owenImageContainer.style.zIndex = '1000';
+            document.body.appendChild(owenImageContainer);
             
-            // EFFECTS
+            // EFFECTS SETTINGS
+            const colors = ['#ff0000','#ffd700','#0000ff','#ff00ff','#00ffff','#ff7f00'];
+            const messages = [
+                'OWEN RULES!','CHAMPION!','👑','THE BEST!','#1',
+                'OWEN > JACK','DOMINATOR','+'+ scoreDiff +' POINTS!'
+            ];
+            
             function spotlight() {
                 document.body.style.backgroundColor = '#f0f8ff';
                 setTimeout(() => document.body.style.backgroundColor = '#fffae0', 200);
@@ -519,7 +530,7 @@
                 c.style.left = Math.random()*100+'vw';
                 c.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
                 c.style.animationDuration = (Math.random()*3+2)+'s';
-                confettiContainer.appendChild(c);
+                document.querySelector('.confetti-container').appendChild(c);
                 
                 if (Math.random()<0.2) {
                     const t = document.createElement('div');
@@ -527,16 +538,16 @@
                     t.style.left = Math.random()*100+'vw';
                     t.textContent = messages[Math.floor(Math.random()*messages.length)];
                     t.style.animationDuration = (Math.random()*4+3)+'s';
-                    confettiContainer.appendChild(t);
+                    document.querySelector('.confetti-container').appendChild(t);
                     setTimeout(() => t.remove(), 7000);
                 }
                 setTimeout(() => c.remove(), 5000);
             }
             
-            function createJackBubble() {
+            function createOwenBubble() {
                 const b = document.createElement('div');
                 b.classList.add('owen-bubble');
-                b.textContent = 'Jack > Owen';
+                b.textContent = 'Owen > Jack';
                 b.style.left = Math.random()*100+'vw';
                 document.body.appendChild(b);
                 setTimeout(() => b.remove(), 4000);
@@ -571,6 +582,20 @@
                 setTimeout(() => d.remove(), 5000);
             }
             
+            // Function to repeatedly show ow enbetter.png
+            function createOwenImage() {
+                const img = document.createElement('img');
+                img.src = 'owenbetter.png';
+                img.style.position = 'absolute';
+                img.style.width = '100px';
+                img.style.height = 'auto';
+                img.style.top = Math.random()*90 + 'vh';
+                img.style.left = Math.random()*90 + 'vw';
+                img.style.opacity = '0.7';
+                owenImageContainer.appendChild(img);
+                setTimeout(() => img.remove(), 2000);
+            }
+            
             // INITIALIZE
             let seconds = 0;
             setInterval(() => {
@@ -578,11 +603,21 @@
                 document.getElementById('counter').textContent = seconds;
             }, 1000);
             
+            // Ensure confetti container exists
+            let confettiContainer = document.querySelector('.confetti-container');
+            if (!confettiContainer) {
+                confettiContainer = document.createElement('div');
+                confettiContainer.classList.add('confetti-container');
+                document.body.appendChild(confettiContainer);
+            }
+            
             setInterval(createConfetti, 100);
-            setInterval(createJackBubble, 2000);
+            setInterval(createOwenBubble, 2000);
             setInterval(spotlight, 5000);
             setInterval(createFirework, 3000);
             setInterval(createVictoryDance, 7000);
+            setInterval(createOwenImage, 500); // Show ow enbetter.png abundantly
+            
             spotlight();
         });
     </script>
